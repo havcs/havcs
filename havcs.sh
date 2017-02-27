@@ -2,7 +2,8 @@
 
 DATE_TIME=`date "+%Y-%m-%d_%H-%M-%S"`
 FILE_IN="$2"
-BACKUP_DIR="/Users/stephen/.havcs/files"
+ROOT_BACKUP_DIR="/var/lib/havcs"
+USER_BACKUP_DIR="/Users/${USER}/.local/share/havcs"
 FILE_OUT=`echo $FILE_IN | tr / _`"_-_"${DATE_TIME}
 OPTION="$3"
 NUMBER="$4"
@@ -60,6 +61,10 @@ function restore {
         echo "Invalid operation "${OPTION}"!"
         exit
     fi
+}
+
+function invalid {
+    echo "Operation required!"
 }
 
 case "$1" in
