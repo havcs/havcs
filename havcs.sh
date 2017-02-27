@@ -12,6 +12,11 @@ NUMBER="$4"
 # echo ${FILE_NAME}
 
 function edit {
+    if [[ ${USER} == "root" ]] ; then
+        BACKUP_DIR=${ROOT_BACKUP_DIR}
+    else
+        BACKUP_DIR=${USER_BACKUP_DIR}
+    fi
     TMP_FILE="/tmp/"${FILE_OUT}".tmp"
     cp ${FILE_IN} ${TMP_FILE} # copy file to /tmp
 
@@ -26,6 +31,11 @@ function edit {
 }
 
 function list {
+    if [[ ${USER} == "root" ]] ; then
+        BACKUP_DIR=${ROOT_BACKUP_DIR}
+    else
+        BACKUP_DIR=${USER_BACKUP_DIR}
+    fi
     i=0
     echo "available versions for "${FILE_IN}
     for file in ${BACKUP_DIR}/`echo $FILE_IN | tr / _`* # get all backup files for this input
@@ -40,7 +50,11 @@ function list {
 }
 
 function restore {
-
+    if [[ ${USER} == "root" ]] ; then
+        BACKUP_DIR=${ROOT_BACKUP_DIR}
+    else
+        BACKUP_DIR=${USER_BACKUP_DIR}
+    fi
     if [[ ${OPTION} == "-n" ]]; then
         i=0 # this loop gets the filename of the version to be restored
         for file in ${BACKUP_DIR}/`echo $FILE_IN | tr / _`* # get all backup files for this input
